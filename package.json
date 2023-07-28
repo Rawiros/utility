@@ -1,0 +1,30 @@
+{
+  "name": "utility",
+  "version": "1.0.0",
+  "description": "Utility module used in some of my projects",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "tsc --module commonjs",
+    "test": "npm run clean && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rawiros/utility.git"
+  },
+  "author": "Rawir",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rawiros/utility/issues"
+  },
+  "homepage": "https://github.com/Rawiros/utility#readme",
+  "devDependencies": {
+    "@types/node": "^20.4.5",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.1.6"
+  }
+}
