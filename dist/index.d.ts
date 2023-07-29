@@ -2,6 +2,8 @@ import getCustomId from './getCustomId';
 import time2ms from './time2ms';
 import flattenObject from './flattenObject';
 import SetDB from './SetDB';
+import setPriority from './setPriority';
+import formatErrorStack from './formatErrorStack';
 declare global {
     const DOT: string;
     const EMPTY: string;
@@ -74,4 +76,4 @@ declare const Icons: {
 };
 declare const sleep: (ms: number) => Promise<unknown>;
 declare const joinString: (...lines: string[]) => string;
-export { Icons, getCustomId, time2ms, sleep, flattenObject, joinString, SetDB };
+export { Icons, getCustomId, time2ms, sleep, flattenObject, joinString, SetDB, setPriority, formatErrorStack };
