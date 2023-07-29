@@ -5,6 +5,8 @@ import getCustomId from './getCustomId';
 import time2ms from './time2ms';
 import flattenObject from './flattenObject';
 import SetDB from './SetDB';
+import setPriority from './setPriority';
+import formatErrorStack from './formatErrorStack';
 
 _icons.Placeholder = _icons[placeholder as keyof typeof _icons];
 
@@ -99,4 +101,4 @@ const Icons = {
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const joinString = (...lines: string[]) => lines.filter(line => !!line).join("\n");
 
-export { Icons, getCustomId, time2ms, sleep, flattenObject, joinString, SetDB }; 
+export { Icons, getCustomId, time2ms, sleep, flattenObject, joinString, SetDB, setPriority, formatErrorStack };
