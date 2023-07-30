@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Icon = exports.formatErrorStack = exports.setPriority = exports.SetDB = exports.joinString = exports.flattenObject = exports.sleep = exports.time2ms = exports.getCustomId = exports.Icons = void 0;
+exports.EMPTY = exports.DOT = exports.Icon = exports.formatErrorStack = exports.setPriority = exports.SetDB = exports.joinString = exports.flattenObject = exports.sleep = exports.time2ms = exports.getCustomId = exports.Icons = void 0;
 const v8_1 = __importDefault(require("v8"));
 const vm_1 = __importDefault(require("vm"));
 const icons_json_1 = require("./icons.json");
@@ -21,7 +21,9 @@ const formatErrorStack_1 = __importDefault(require("./formatErrorStack"));
 exports.formatErrorStack = formatErrorStack_1.default;
 icons_json_1.icons.Placeholder = icons_json_1.icons[icons_json_1.placeholder];
 const EMPTY = "᲼";
+exports.EMPTY = EMPTY;
 const DOT = "•";
+exports.DOT = DOT;
 Object.assign(globalThis, { EMPTY, DOT });
 ;
 String.prototype.equals = function (value) {

@@ -4,6 +4,8 @@ import flattenObject from './flattenObject';
 import SetDB from './SetDB';
 import setPriority from './setPriority';
 import formatErrorStack from './formatErrorStack';
+declare const EMPTY = "\u1CBC";
+declare const DOT = "\u2022";
 declare global {
     const DOT: string;
     const EMPTY: string;
@@ -77,4 +79,4 @@ declare const Icons: {
 };
 declare const sleep: (ms: number) => Promise<unknown>;
 declare const joinString: (...lines: string[]) => string;
-export { Icons, getCustomId, time2ms, sleep, flattenObject, joinString, SetDB, setPriority, formatErrorStack, Icon };
+export { Icons, getCustomId, time2ms, sleep, flattenObject, joinString, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
