@@ -88,17 +88,16 @@ if (!globalThis.gc) {
     global.gc = vm.runInNewContext('gc');
 }
 
-const Icons = {
-    ..._icons,
-    Icon: <IconName extends keyof typeof _icons>(name: IconName, text?: string) => {
-        if (!text)
-            return _icons[name];
+const Icon = <IconName extends keyof typeof _icons>(name: IconName, text?: string) => {
+    if (!text)
+        return _icons[name];
 
-        return `${_icons[name]} ${text}`;
-    }
-};
+    return `${_icons[name]} ${text}`;
+}
+
+const Icons = { ..._icons, Icon };
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const joinString = (...lines: string[]) => lines.filter(line => !!line).join("\n");
 
-export { Icons, getCustomId, time2ms, sleep, flattenObject, joinString, SetDB, setPriority, formatErrorStack };
+export { Icons, getCustomId, time2ms, sleep, flattenObject, joinString, SetDB, setPriority, formatErrorStack, Icon };
