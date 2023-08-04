@@ -40,14 +40,35 @@ String.prototype.limit = function (length = 1970) {
         return this.slice(0, length - 3).concat("...");
     return this;
 };
-Number.prototype.equals = function (value) {
-    return this === value;
-};
 Boolean.prototype.is = function (value) {
-    return this === value;
+    return this.valueOf() === value;
 };
-Number.prototype.toBigInt = function () {
-    return BigInt(this.valueOf());
+// Numbers
+Number.prototype.equals = function (value) {
+    return this.valueOf() === value;
+};
+Number.prototype.addFlag = function (flag) {
+    return this.valueOf() | (1 << flag);
+};
+Number.prototype.hasFlag = function (flag) {
+    return (this.valueOf() & (1 << flag)) !== 0;
+};
+Number.prototype.removeFlag = function (flag) {
+    return Math.max(this.valueOf() & ~(1 << flag), 0);
+};
+// BigInts
+BigInt.prototype.addFlag = function (flag) {
+    return this.valueOf() | (1n << flag);
+};
+BigInt.prototype.hasFlag = function (flag) {
+    return (this.valueOf() & (1n << flag)) !== 0n;
+};
+BigInt.prototype.removeFlag = function (flag) {
+    return this.valueOf() < 0n ? 0n : this.valueOf() & ~(1n << flag);
+};
+;
+BigInt.prototype.is = function (value) {
+    return this === value.valueOf();
 };
 BigInt.prototype.toNumber = function () {
     return Number(this.valueOf());
@@ -58,7 +79,7 @@ Boolean.prototype.toIcon = function () {
 String.prototype.firstUpper = function () {
     return this.split("_").map(e => e[0].toUpperCase() + e.slice(1).toLowerCase()).join("");
 };
-if (!globalThis.gc) {
+if (process.argv0 !== "bun" && !globalThis.gc) {
     v8_1.default.setFlagsFromString('--expose_gc');
     global.gc = vm_1.default.runInNewContext('gc');
 }

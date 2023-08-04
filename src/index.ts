@@ -31,11 +31,17 @@ declare global {
     }
     interface BigInt {
         toNumber(): number
-        equals(value: bigint): boolean
+        is(value: bigint): boolean
+        addFlag(flag: bigint): bigint
+        hasFlag(flag: bigint): boolean
+        removeFlag(flag: bigint): bigint
     }
     interface Number {
         toBigInt(): bigint
         equals(value: number): boolean
+        addFlag(flag: number): number
+        hasFlag(flag: number): boolean
+        removeFlag(flag: number): number
     }
 };
 
@@ -57,18 +63,44 @@ String.prototype.limit = function (length = 1970) {
         return this.slice(0, length - 3).concat("...")
 
     return this;
-}
-
-Number.prototype.equals = function (value) {
-    return this === value;
 };
 
 Boolean.prototype.is = function (value) {
-    return this === value;
+    return this.valueOf() === value;
 };
 
-Number.prototype.toBigInt = function () {
-    return BigInt(this.valueOf());
+// Numbers
+Number.prototype.equals = function (value) {
+    return this.valueOf() === value;
+};
+
+Number.prototype.addFlag = function (flag) {
+    return this.valueOf() | (1 << flag);
+};
+
+Number.prototype.hasFlag = function (flag) {
+    return (this.valueOf() & (1 << flag)) !== 0;
+};
+
+Number.prototype.removeFlag = function (flag) {
+    return Math.max(this.valueOf() & ~(1 << flag), 0)
+};
+
+// BigInts
+BigInt.prototype.addFlag = function (flag) {
+    return this.valueOf() | (1n << flag);
+};
+
+BigInt.prototype.hasFlag = function (flag) {
+    return (this.valueOf() & (1n << flag)) !== 0n;
+};
+
+BigInt.prototype.removeFlag = function (flag) {
+    return this.valueOf() < 0n ? 0n : this.valueOf() & ~(1n << flag);
+};;
+
+BigInt.prototype.is = function (value) {
+    return this === value.valueOf();
 };
 
 BigInt.prototype.toNumber = function () {
@@ -83,7 +115,7 @@ String.prototype.firstUpper = function () {
     return (this as string).split("_").map(e => e[0].toUpperCase() + e.slice(1).toLowerCase()).join("");
 };
 
-if (!globalThis.gc) {
+if (process.argv0 !== "bun" && !globalThis.gc) {
     v8.setFlagsFromString('--expose_gc');
     global.gc = vm.runInNewContext('gc');
 }

@@ -21,11 +21,17 @@ declare global {
     }
     interface BigInt {
         toNumber(): number;
-        equals(value: bigint): boolean;
+        is(value: bigint): boolean;
+        addFlag(flag: bigint): bigint;
+        hasFlag(flag: bigint): boolean;
+        removeFlag(flag: bigint): bigint;
     }
     interface Number {
         toBigInt(): bigint;
         equals(value: number): boolean;
+        addFlag(flag: number): number;
+        hasFlag(flag: number): boolean;
+        removeFlag(flag: number): number;
     }
 }
 declare const Icon: <IconName extends "Danger1" | "Minus" | "No" | "Yes" | "Hammer" | "Time" | "Todo" | "Hmm" | "Date" | "Danger3" | "Heart" | "Id" | "Info" | "Join" | "Leave" | "Message" | "Pin" | "Stage" | "Telegram" | "User" | "Crown" | "Airplane" | "Bank" | "Bell" | "Bulb" | "Forum" | "Invite" | "Key" | "Lock" | "Moon" | "Options" | "Pen" | "Plus" | "Star2" | "Star3" | "Stars" | "Thunder" | "Trophy" | "Unluck" | "User1" | "Users" | "Mention" | "Fire" | "Link" | "Placeholder">(name: IconName, text?: string) => string;
