@@ -43,7 +43,20 @@ declare global {
         hasFlag(flag: number): boolean
         removeFlag(flag: number): number
     }
+    interface Math {
+        toByte(degress: number): number
+        limit(value: number, min?: number, max?: number): number
+    }
 };
+
+Math.toByte = degrees => {
+    let b = Math.floor((degrees % 360) * 256 / 360)
+    if (b < -128) b += 256
+    else if (b > 127) b -= 256
+    return b;
+};
+
+Math.limit = (value: number, min = 0, max = 128) => Math.min(Math.max(value, min), max);
 
 String.prototype.equals = function (value) {
     return this === value;
