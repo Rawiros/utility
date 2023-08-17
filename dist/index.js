@@ -41,7 +41,7 @@ String.prototype.equals = function (value) {
 String.prototype.format = function (data = {}) {
     let text = String(this);
     for (const key of Object.keys(data))
-        text = text.replace(`{${key}}`, data[key]);
+        text = text.replaceAll(`{${key}}`, data[key]);
     return text;
 };
 String.prototype.limit = function (length = 1970) {
