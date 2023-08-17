@@ -14,10 +14,10 @@ declare global {
         toIcon(): string;
     }
     interface String {
-        firstUpper(): String;
-        limit(length: number): String;
+        firstUpper(): string;
+        limit(length: number): string;
         equals(value: string): boolean;
-        format(data?: Record<string, any>): String;
+        format(data?: Record<string, any>): string;
     }
     interface BigInt {
         toNumber(): number;

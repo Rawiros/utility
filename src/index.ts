@@ -24,10 +24,10 @@ declare global {
         toIcon(): string
     }
     interface String {
-        firstUpper(): String
-        limit(length: number): String
+        firstUpper(): string
+        limit(length: number): string
         equals(value: string): boolean
-        format(data?: Record<string, any>): String
+        format(data?: Record<string, any>): string
     }
     interface BigInt {
         toNumber(): number
@@ -75,7 +75,7 @@ String.prototype.limit = function (length = 1970) {
     if (this.length >= length)
         return this.slice(0, length - 3).concat("...")
 
-    return this;
+    return this as string;
 };
 
 Boolean.prototype.is = function (value) {
