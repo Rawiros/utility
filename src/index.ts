@@ -3,6 +3,7 @@ import getCustomId from './getCustomId';
 import time2ms from './time2ms';
 import flattenObject from './flattenObject';
 import SetDB from './SetDB';
+import MapDB from './MapDB';
 import setPriority from './setPriority';
 import formatErrorStack from './formatErrorStack';
 
@@ -146,4 +147,4 @@ const Icons = { ..._icons, Icon };
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const joinString = (...lines: string[]) => lines.filter(line => !!line).join("\n");
 
-export { Icons, getCustomId, time2ms, sleep, flattenObject, joinString, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
+export { Icons, getCustomId, time2ms, sleep, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
