@@ -1,5 +1,3 @@
-import v8 from 'v8';
-import vm from 'vm';
 import { icons as _icons, placeholder } from './icons.json';
 import getCustomId from './getCustomId';
 import time2ms from './time2ms';
@@ -13,7 +11,10 @@ _icons.Placeholder = _icons[placeholder as keyof typeof _icons];
 const EMPTY = "᲼"
 const DOT = "•"
 
-Object.assign(globalThis, { EMPTY, DOT })
+Object.defineProperties(global, {
+    EMPTY: { get() { return EMPTY } },
+    DOT: { get() { return DOT } },
+});
 
 declare global {
     const DOT: string
@@ -129,8 +130,8 @@ String.prototype.firstUpper = function () {
 };
 
 if (process.argv0 !== "bun" && !globalThis.gc) {
-    v8.setFlagsFromString('--expose_gc');
-    global.gc = vm.runInNewContext('gc');
+    require("v8").setFlagsFromString('--expose_gc');
+    global.gc = require("vm").runInNewContext('gc');
 }
 
 const Icon = <IconName extends keyof typeof _icons>(name: IconName, text?: string) => {
