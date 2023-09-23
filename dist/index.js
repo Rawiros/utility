@@ -3,9 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EMPTY = exports.DOT = exports.Icon = exports.formatErrorStack = exports.setPriority = exports.SetDB = exports.joinString = exports.flattenObject = exports.sleep = exports.time2ms = exports.getCustomId = exports.Icons = void 0;
-const v8_1 = __importDefault(require("v8"));
-const vm_1 = __importDefault(require("vm"));
+exports.EMPTY = exports.DOT = exports.Icon = exports.formatErrorStack = exports.setPriority = exports.SetDB = exports.MapDB = exports.joinString = exports.flattenObject = exports.sleep = exports.time2ms = exports.getCustomId = exports.Icons = void 0;
 const icons_json_1 = require("./icons.json");
 const getCustomId_1 = __importDefault(require("./getCustomId"));
 exports.getCustomId = getCustomId_1.default;
@@ -15,6 +13,8 @@ const flattenObject_1 = __importDefault(require("./flattenObject"));
 exports.flattenObject = flattenObject_1.default;
 const SetDB_1 = __importDefault(require("./SetDB"));
 exports.SetDB = SetDB_1.default;
+const MapDB_1 = __importDefault(require("./MapDB"));
+exports.MapDB = MapDB_1.default;
 const setPriority_1 = __importDefault(require("./setPriority"));
 exports.setPriority = setPriority_1.default;
 const formatErrorStack_1 = __importDefault(require("./formatErrorStack"));
@@ -24,7 +24,10 @@ const EMPTY = "᲼";
 exports.EMPTY = EMPTY;
 const DOT = "•";
 exports.DOT = DOT;
-Object.assign(globalThis, { EMPTY, DOT });
+Object.defineProperties(global, {
+    EMPTY: { get() { return EMPTY; } },
+    DOT: { get() { return DOT; } },
+});
 ;
 Math.toByte = degrees => {
     let b = Math.floor((degrees % 360) * 256 / 360);
@@ -89,8 +92,8 @@ String.prototype.firstUpper = function () {
     return this.split("_").map(e => e[0].toUpperCase() + e.slice(1).toLowerCase()).join("");
 };
 if (process.argv0 !== "bun" && !globalThis.gc) {
-    v8_1.default.setFlagsFromString('--expose_gc');
-    global.gc = vm_1.default.runInNewContext('gc');
+    require("v8").setFlagsFromString('--expose_gc');
+    global.gc = require("vm").runInNewContext('gc');
 }
 const Icon = (name, text) => {
     if (!text)

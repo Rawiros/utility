@@ -1,2 +1,2 @@
-declare const _default: (prefix?: string) => string;
+declare const _default: (namespace?: string) => string;
 export default _default;

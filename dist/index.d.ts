@@ -2,6 +2,7 @@ import getCustomId from './getCustomId';
 import time2ms from './time2ms';
 import flattenObject from './flattenObject';
 import SetDB from './SetDB';
+import MapDB from './MapDB';
 import setPriority from './setPriority';
 import formatErrorStack from './formatErrorStack';
 declare const EMPTY = "\u1CBC";
@@ -89,4 +90,4 @@ declare const Icons: {
 };
 declare const sleep: (ms: number) => Promise<unknown>;
 declare const joinString: (...lines: string[]) => string;
-export { Icons, getCustomId, time2ms, sleep, flattenObject, joinString, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
+export { Icons, getCustomId, time2ms, sleep, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
