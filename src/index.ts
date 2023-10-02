@@ -6,6 +6,7 @@ import SetDB from './SetDB';
 import MapDB from './MapDB';
 import setPriority from './setPriority';
 import formatErrorStack from './formatErrorStack';
+import formatBytes from './formatBytes';
 
 _icons.Placeholder = _icons[placeholder as keyof typeof _icons];
 
@@ -44,6 +45,7 @@ declare global {
         addFlag(flag: number): number
         hasFlag(flag: number): boolean
         removeFlag(flag: number): number
+        formatBytes(decimals?: number): string
     }
     interface Math {
         toByte(degress: number): number
@@ -88,6 +90,10 @@ Boolean.prototype.is = function (value) {
 Number.prototype.equals = function (value) {
     return this.valueOf() === value;
 };
+
+Number.prototype.formatBytes = function(decimals = undefined) {
+    return formatBytes(this.valueOf(), decimals)
+}
 
 Number.prototype.addFlag = function (flag) {
     return this.valueOf() | (1 << flag);
@@ -147,4 +153,4 @@ const Icons = { ..._icons, Icon };
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const joinString = (...lines: string[]) => lines.filter(line => !!line).join("\n");
 
-export { Icons, getCustomId, time2ms, sleep, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
+export { Icons, getCustomId, time2ms, sleep, formatBytes, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };

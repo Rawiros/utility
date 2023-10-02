@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EMPTY = exports.DOT = exports.Icon = exports.formatErrorStack = exports.setPriority = exports.SetDB = exports.MapDB = exports.joinString = exports.flattenObject = exports.sleep = exports.time2ms = exports.getCustomId = exports.Icons = void 0;
+exports.EMPTY = exports.DOT = exports.Icon = exports.formatErrorStack = exports.setPriority = exports.SetDB = exports.MapDB = exports.joinString = exports.flattenObject = exports.formatBytes = exports.sleep = exports.time2ms = exports.getCustomId = exports.Icons = void 0;
 const icons_json_1 = require("./icons.json");
 const getCustomId_1 = __importDefault(require("./getCustomId"));
 exports.getCustomId = getCustomId_1.default;
@@ -19,6 +19,8 @@ const setPriority_1 = __importDefault(require("./setPriority"));
 exports.setPriority = setPriority_1.default;
 const formatErrorStack_1 = __importDefault(require("./formatErrorStack"));
 exports.formatErrorStack = formatErrorStack_1.default;
+const formatBytes_1 = __importDefault(require("./formatBytes"));
+exports.formatBytes = formatBytes_1.default;
 icons_json_1.icons.Placeholder = icons_json_1.icons[icons_json_1.placeholder];
 const EMPTY = "᲼";
 exports.EMPTY = EMPTY;
@@ -58,6 +60,9 @@ Boolean.prototype.is = function (value) {
 // Numbers
 Number.prototype.equals = function (value) {
     return this.valueOf() === value;
+};
+Number.prototype.formatBytes = function (decimals = undefined) {
+    return (0, formatBytes_1.default)(this.valueOf(), decimals);
 };
 Number.prototype.addFlag = function (flag) {
     return this.valueOf() | (1 << flag);

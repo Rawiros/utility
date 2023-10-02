@@ -5,6 +5,7 @@ import SetDB from './SetDB';
 import MapDB from './MapDB';
 import setPriority from './setPriority';
 import formatErrorStack from './formatErrorStack';
+import formatBytes from './formatBytes';
 declare const EMPTY = "\u1CBC";
 declare const DOT = "\u2022";
 declare global {
@@ -33,6 +34,7 @@ declare global {
         addFlag(flag: number): number;
         hasFlag(flag: number): boolean;
         removeFlag(flag: number): number;
+        formatBytes(decimals?: number): string;
     }
     interface Math {
         toByte(degress: number): number;
@@ -90,4 +92,4 @@ declare const Icons: {
 };
 declare const sleep: (ms: number) => Promise<unknown>;
 declare const joinString: (...lines: string[]) => string;
-export { Icons, getCustomId, time2ms, sleep, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
+export { Icons, getCustomId, time2ms, sleep, formatBytes, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
