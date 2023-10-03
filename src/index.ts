@@ -7,6 +7,12 @@ import MapDB from './MapDB';
 import setPriority from './setPriority';
 import formatErrorStack from './formatErrorStack';
 import formatBytes from './formatBytes';
+import getDirectURL from './getDirectURL';
+import getUsername from './getUsername';
+import getFormattedDirectURL from './getFormattedDirectURL';
+import path from 'path';
+import { realpath } from 'fs';
+import Queue from './Queue';
 
 _icons.Placeholder = _icons[placeholder as keyof typeof _icons];
 
@@ -91,7 +97,7 @@ Number.prototype.equals = function (value) {
     return this.valueOf() === value;
 };
 
-Number.prototype.formatBytes = function(decimals = undefined) {
+Number.prototype.formatBytes = function (decimals = undefined) {
     return formatBytes(this.valueOf(), decimals)
 }
 
@@ -153,4 +159,16 @@ const Icons = { ..._icons, Icon };
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const joinString = (...lines: string[]) => lines.filter(line => !!line).join("\n");
 
-export { Icons, getCustomId, time2ms, sleep, formatBytes, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
+function recache(id: string) {
+    try {
+        const realpath = require.resolve(id);
+
+        delete require.cache[realpath];
+        return require.cache[realpath] = require(realpath);
+    } catch (err) {
+        console.error(err);
+        return false;
+    }
+}
+
+export { Icons, getCustomId, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };

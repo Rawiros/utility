@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EMPTY = exports.DOT = exports.Icon = exports.formatErrorStack = exports.setPriority = exports.SetDB = exports.MapDB = exports.joinString = exports.flattenObject = exports.formatBytes = exports.sleep = exports.time2ms = exports.getCustomId = exports.Icons = void 0;
+exports.EMPTY = exports.DOT = exports.Icon = exports.formatErrorStack = exports.setPriority = exports.SetDB = exports.MapDB = exports.joinString = exports.flattenObject = exports.getDirectURL = exports.getFormattedDirectURL = exports.recache = exports.getUsername = exports.Queue = exports.formatBytes = exports.sleep = exports.time2ms = exports.getCustomId = exports.Icons = void 0;
 const icons_json_1 = require("./icons.json");
 const getCustomId_1 = __importDefault(require("./getCustomId"));
 exports.getCustomId = getCustomId_1.default;
@@ -21,6 +21,14 @@ const formatErrorStack_1 = __importDefault(require("./formatErrorStack"));
 exports.formatErrorStack = formatErrorStack_1.default;
 const formatBytes_1 = __importDefault(require("./formatBytes"));
 exports.formatBytes = formatBytes_1.default;
+const getDirectURL_1 = __importDefault(require("./getDirectURL"));
+exports.getDirectURL = getDirectURL_1.default;
+const getUsername_1 = __importDefault(require("./getUsername"));
+exports.getUsername = getUsername_1.default;
+const getFormattedDirectURL_1 = __importDefault(require("./getFormattedDirectURL"));
+exports.getFormattedDirectURL = getFormattedDirectURL_1.default;
+const Queue_1 = __importDefault(require("./Queue"));
+exports.Queue = Queue_1.default;
 icons_json_1.icons.Placeholder = icons_json_1.icons[icons_json_1.placeholder];
 const EMPTY = "᲼";
 exports.EMPTY = EMPTY;
@@ -112,4 +120,16 @@ const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 exports.sleep = sleep;
 const joinString = (...lines) => lines.filter(line => !!line).join("\n");
 exports.joinString = joinString;
+function recache(id) {
+    try {
+        const realpath = require.resolve(id);
+        delete require.cache[realpath];
+        return require.cache[realpath] = require(realpath);
+    }
+    catch (err) {
+        console.error(err);
+        return false;
+    }
+}
+exports.recache = recache;
 //# sourceMappingURL=index.js.map
