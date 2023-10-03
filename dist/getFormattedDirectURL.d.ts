@@ -9,7 +9,6 @@ export interface DirectURLArgs {
     }];
     channel: [{
         id: guildId;
-        name: string;
     }, {
         name?: string;
         id: channelId;
@@ -21,10 +20,8 @@ export interface DirectURLArgs {
     }];
     message: [{
         id: guildId;
-        name: string;
     }, {
-        name?: string;
-        id: channelId;
+        d: channelId;
     }, {
         id: messageId;
         author: {

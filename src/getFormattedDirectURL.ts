@@ -8,9 +8,9 @@ type userId = string | number | bigint;
 
 export interface DirectURLArgs {
     guild: [{ id: guildId, name: string }]
-    channel: [{ id: guildId, name: string }, { name?: string, id: channelId }]
+    channel: [{ id: guildId }, { name?: string, id: channelId }]
     user: [{ globalName?: string, username: string, id: userId }]
-    message: [{ id: guildId, name: string }, { name?: string, id: channelId }, { id: messageId, author: { globalName?: string, username: string, id: userId } }]
+    message: [{ id: guildId }, { d: channelId }, { id: messageId, author: { globalName?: string, username: string, id: userId } }]
 }
 
 export default function <Type extends keyof DirectURLArgs>(type: Type, args: DirectURLArgs[Type]) {
