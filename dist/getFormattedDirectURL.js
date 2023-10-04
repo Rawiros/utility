@@ -13,7 +13,7 @@ function default_1(type, args) {
     if (type === "guild")
         return `[${args[0]?.name || "Unknown"}](https://discord.com/channels/${args[0].id})`;
     if (type === "message")
-        return `[${args[2]?.author ? (0, getUsername_1.default)(args[2].author) + "'s" : "Message URL"}](https://discord.com/channels/${args[0].id}/${args[1].id}/${args[2].id})`;
+        return `[${args[2]?.author ? (0, getUsername_1.default)(args[2].author) + "'s Message" : "Message URL"}](https://discord.com/channels/${args[0].id}/${args[1].id}/${args[2].id})`;
     return "";
 }
 exports.default = default_1;

@@ -24,7 +24,7 @@ export default function <Type extends keyof DirectURLArgs>(type: Type, args: Dir
         return `[${args[0]?.name || "Unknown"}](https://discord.com/channels/${args[0].id})`;
 
     if (type === "message")
-        return `[${args[2]?.author ? getUsername(args[2].author) + "'s" : "Message URL"}](https://discord.com/channels/${args[0].id}/${args[1].id}/${args[2].id})`
+        return `[${args[2]?.author ? getUsername(args[2].author) + "'s Message" : "Message URL"}](https://discord.com/channels/${args[0].id}/${args[1].id}/${args[2].id})`
 
     return "";
 };
