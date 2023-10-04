@@ -21,7 +21,7 @@ export interface DirectURLArgs {
     message: [{
         id: guildId;
     }, {
-        d: channelId;
+        id: channelId;
     }, {
         id: messageId;
         author: {
