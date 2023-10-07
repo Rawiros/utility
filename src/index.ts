@@ -10,14 +10,12 @@ import formatBytes from './formatBytes';
 import getDirectURL from './getDirectURL';
 import getUsername from './getUsername';
 import getFormattedDirectURL from './getFormattedDirectURL';
-import path from 'path';
-import { realpath } from 'fs';
 import Queue from './Queue';
 
 _icons.Placeholder = _icons[placeholder as keyof typeof _icons];
 
-const EMPTY = "᲼"
-const DOT = "•"
+const EMPTY = "᲼";
+const DOT = "•";
 
 Object.defineProperties(global, {
     EMPTY: { get() { return EMPTY } },
@@ -142,17 +140,12 @@ String.prototype.firstUpper = function () {
     return (this as string).split("_").map(e => e[0].toUpperCase() + e.slice(1).toLowerCase()).join("");
 };
 
-if (process.argv0 !== "bun" && !globalThis.gc) {
-    require("v8").setFlagsFromString('--expose_gc');
-    global.gc = require("vm").runInNewContext('gc');
-}
-
 const Icon = <IconName extends keyof typeof _icons>(name: IconName, text?: string) => {
     if (!text)
         return _icons[name];
 
     return `${_icons[name]} ${text}`;
-}
+};
 
 const Icons = { ..._icons, Icon };
 
@@ -170,5 +163,18 @@ function recache(id: string) {
         return false;
     }
 }
+
+
+// expose global garbage collector
+if (process.argv0 !== "bun" && !globalThis.gc) {
+    require("v8").setFlagsFromString('--expose_gc');
+    global.gc = require("vm").runInNewContext('gc');
+};
+
+// listen for errors
+if (process.env.PM2_HOME) {
+    process.on('uncaughtException', (err, origin) => console.error(origin, err));
+    process.on('unhandledRejection', err => console.error("unhandledRejection", err));
+};
 
 export { Icons, getCustomId, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };

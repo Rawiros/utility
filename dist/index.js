@@ -104,10 +104,6 @@ Boolean.prototype.toIcon = function () {
 String.prototype.firstUpper = function () {
     return this.split("_").map(e => e[0].toUpperCase() + e.slice(1).toLowerCase()).join("");
 };
-if (process.argv0 !== "bun" && !globalThis.gc) {
-    require("v8").setFlagsFromString('--expose_gc');
-    global.gc = require("vm").runInNewContext('gc');
-}
 const Icon = (name, text) => {
     if (!text)
         return icons_json_1.icons[name];
@@ -132,4 +128,16 @@ function recache(id) {
     }
 }
 exports.recache = recache;
+// expose global garbage collector
+if (process.argv0 !== "bun" && !globalThis.gc) {
+    require("v8").setFlagsFromString('--expose_gc');
+    global.gc = require("vm").runInNewContext('gc');
+}
+;
+// listen for errors
+if (process.env.PM2_HOME) {
+    process.on('uncaughtException', (err, origin) => console.error(origin, err));
+    process.on('unhandledRejection', err => console.error("unhandledRejection", err));
+}
+;
 //# sourceMappingURL=index.js.map
