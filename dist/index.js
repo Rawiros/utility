@@ -136,8 +136,8 @@ if (process.argv0 !== "bun" && !globalThis.gc) {
 ;
 // listen for errors
 if (process.env.PM2_HOME) {
-    process.on('uncaughtException', (err, origin) => console.error(origin, err));
-    process.on('unhandledRejection', err => console.error("unhandledRejection", err));
+    process.on('uncaughtException', (err, origin) => console.log(origin, err));
+    process.on('unhandledRejection', err => console.log("unhandledRejection", err));
 }
 ;
 //# sourceMappingURL=index.js.map

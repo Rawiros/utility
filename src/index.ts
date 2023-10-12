@@ -173,8 +173,8 @@ if (process.argv0 !== "bun" && !globalThis.gc) {
 
 // listen for errors
 if (process.env.PM2_HOME) {
-    process.on('uncaughtException', (err, origin) => console.error(origin, err));
-    process.on('unhandledRejection', err => console.error("unhandledRejection", err));
+    process.on('uncaughtException', (err, origin) => console.log(origin, err));
+    process.on('unhandledRejection', err => console.log("unhandledRejection", err));
 };
 
 export { Icons, getCustomId, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
