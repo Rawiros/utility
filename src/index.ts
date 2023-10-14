@@ -19,7 +19,7 @@ const DOT = "•";
 
 Object.defineProperties(global, {
     EMPTY: { get() { return EMPTY } },
-    DOT: { get() { return DOT } },
+    DOT: { get() { return DOT } }
 });
 
 declare global {
@@ -50,6 +50,7 @@ declare global {
         hasFlag(flag: number): boolean
         removeFlag(flag: number): number
         formatBytes(decimals?: number): string
+        limit(min?: number, max?: number): number
     }
     interface Math {
         toByte(degress: number): number
@@ -111,6 +112,10 @@ Number.prototype.removeFlag = function (flag) {
     return Math.max(this.valueOf() & ~(1 << flag), 0)
 };
 
+Number.prototype.limit = function (min = 0, max = 128) {
+    return Math.min(Math.max(this.valueOf(), min), max)
+};
+
 // BigInts
 BigInt.prototype.addFlag = function (flag) {
     return this.valueOf() | (1n << flag);
@@ -163,7 +168,6 @@ function recache(id: string) {
         return false;
     }
 }
-
 
 // expose global garbage collector
 if (process.argv0 !== "bun" && !globalThis.gc) {

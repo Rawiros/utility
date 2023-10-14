@@ -36,7 +36,7 @@ const DOT = "•";
 exports.DOT = DOT;
 Object.defineProperties(global, {
     EMPTY: { get() { return EMPTY; } },
-    DOT: { get() { return DOT; } },
+    DOT: { get() { return DOT; } }
 });
 ;
 Math.toByte = degrees => {
@@ -80,6 +80,9 @@ Number.prototype.hasFlag = function (flag) {
 };
 Number.prototype.removeFlag = function (flag) {
     return Math.max(this.valueOf() & ~(1 << flag), 0);
+};
+Number.prototype.limit = function (min = 0, max = 128) {
+    return Math.min(Math.max(this.valueOf(), min), max);
 };
 // BigInts
 BigInt.prototype.addFlag = function (flag) {

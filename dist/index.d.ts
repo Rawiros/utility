@@ -39,6 +39,7 @@ declare global {
         hasFlag(flag: number): boolean;
         removeFlag(flag: number): number;
         formatBytes(decimals?: number): string;
+        limit(min?: number, max?: number): number;
     }
     interface Math {
         toByte(degress: number): number;
