@@ -48,6 +48,9 @@ Math.toByte = degrees => {
     return b;
 };
 Math.limit = (value, min = 0, max = 128) => Math.min(Math.max(value, min), max);
+Array.prototype.random = function () {
+    return this[Math.floor(Math.random() * this.length)];
+};
 String.prototype.equals = function (value) {
     return this === value;
 };

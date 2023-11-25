@@ -45,6 +45,9 @@ declare global {
         toByte(degress: number): number;
         limit(value: number, min?: number, max?: number): number;
     }
+    interface Array<T> {
+        random(): T;
+    }
 }
 declare const Icon: <IconName extends "Danger1" | "Minus" | "No" | "Yes" | "Hammer" | "Time" | "Todo" | "Hmm" | "Date" | "Danger3" | "Heart" | "Id" | "Info" | "Join" | "Leave" | "Message" | "Pin" | "Stage" | "Telegram" | "User" | "Crown" | "Airplane" | "Bank" | "Bell" | "Bulb" | "Forum" | "Invite" | "Key" | "Lock" | "Moon" | "Options" | "Pen" | "Plus" | "Star2" | "Star3" | "Stars" | "Thunder" | "Trophy" | "Unluck" | "User1" | "Users" | "Mention" | "Fire" | "Link" | "Placeholder">(name: IconName, text?: string) => string;
 declare const Icons: {

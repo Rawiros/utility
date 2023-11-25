@@ -56,6 +56,9 @@ declare global {
         toByte(degress: number): number
         limit(value: number, min?: number, max?: number): number
     }
+    interface Array<T> {
+        random(): T;
+    }
 };
 
 Math.toByte = degrees => {
@@ -66,6 +69,10 @@ Math.toByte = degrees => {
 };
 
 Math.limit = (value: number, min = 0, max = 128) => Math.min(Math.max(value, min), max);
+
+Array.prototype.random = function () {
+    return this[Math.floor(Math.random() * this.length)];
+}
 
 String.prototype.equals = function (value) {
     return this === value;
