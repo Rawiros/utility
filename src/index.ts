@@ -11,6 +11,7 @@ import getDirectURL from './getDirectURL';
 import getUsername from './getUsername';
 import getFormattedDirectURL from './getFormattedDirectURL';
 import Queue from './Queue';
+import YAMLConfig from './YAMLConfig';
 
 _icons.Placeholder = _icons[placeholder as keyof typeof _icons];
 
@@ -188,4 +189,4 @@ if (process.env.PM2_HOME) {
     process.on('unhandledRejection', err => console.log("unhandledRejection", err));
 };
 
-export { Icons, getCustomId, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
+export { Icons, getCustomId, YAMLConfig, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };

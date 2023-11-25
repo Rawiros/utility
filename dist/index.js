@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EMPTY = exports.DOT = exports.Icon = exports.formatErrorStack = exports.setPriority = exports.SetDB = exports.MapDB = exports.joinString = exports.flattenObject = exports.getDirectURL = exports.getFormattedDirectURL = exports.recache = exports.getUsername = exports.Queue = exports.formatBytes = exports.sleep = exports.time2ms = exports.getCustomId = exports.Icons = void 0;
+exports.EMPTY = exports.DOT = exports.Icon = exports.formatErrorStack = exports.setPriority = exports.SetDB = exports.MapDB = exports.joinString = exports.flattenObject = exports.getDirectURL = exports.getFormattedDirectURL = exports.recache = exports.getUsername = exports.Queue = exports.formatBytes = exports.sleep = exports.time2ms = exports.YAMLConfig = exports.getCustomId = exports.Icons = void 0;
 const icons_json_1 = require("./icons.json");
 const getCustomId_1 = __importDefault(require("./getCustomId"));
 exports.getCustomId = getCustomId_1.default;
@@ -29,6 +29,8 @@ const getFormattedDirectURL_1 = __importDefault(require("./getFormattedDirectURL
 exports.getFormattedDirectURL = getFormattedDirectURL_1.default;
 const Queue_1 = __importDefault(require("./Queue"));
 exports.Queue = Queue_1.default;
+const YAMLConfig_1 = __importDefault(require("./YAMLConfig"));
+exports.YAMLConfig = YAMLConfig_1.default;
 icons_json_1.icons.Placeholder = icons_json_1.icons[icons_json_1.placeholder];
 const EMPTY = "᲼";
 exports.EMPTY = EMPTY;

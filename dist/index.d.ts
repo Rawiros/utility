@@ -10,6 +10,7 @@ import getDirectURL from './getDirectURL';
 import getUsername from './getUsername';
 import getFormattedDirectURL from './getFormattedDirectURL';
 import Queue from './Queue';
+import YAMLConfig from './YAMLConfig';
 declare const EMPTY = "\u1CBC";
 declare const DOT = "\u2022";
 declare global {
@@ -101,4 +102,4 @@ declare const Icons: {
 declare const sleep: (ms: number) => Promise<unknown>;
 declare const joinString: (...lines: string[]) => string;
 declare function recache(id: string): any;
-export { Icons, getCustomId, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
+export { Icons, getCustomId, YAMLConfig, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
