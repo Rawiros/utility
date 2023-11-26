@@ -1,9 +1,8 @@
-interface Options<S extends any> {
+declare function YAMLConfig<S extends any>(options: {
     config: {
         filePath: string;
         typingPath: string;
     };
     schema: S;
-}
-declare const _default: <S extends unknown>(o: Options<S>) => S;
-export default _default;
+}): S;
+export default YAMLConfig;

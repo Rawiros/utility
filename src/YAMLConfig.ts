@@ -1,37 +1,68 @@
-import { existsSync, writeFileSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync } from 'fs';
 import JS2TS from 'json-to-ts';
+import path from 'path';
 import YAML from 'yaml';
 
-interface Options<S extends any> {
+function YAMLConfig<S extends any>(options: {
     config: {
         filePath: string,
         typingPath: string
     }
     schema: S
-}
+}) {
+    const configExists = false;
+    const configTypingsExists = false;
+    const RegExpPrefix = "[RegExp]: ";
 
-export default <S extends any>(o: Options<S>): S => {
-    const chuj = [
-        existsSync(o.config.filePath),
-        existsSync(o.config.typingPath)
-    ];
+    if (!configExists || !configTypingsExists) {
+        if (!configExists)
+            writeFileSync(options.config.filePath, YAML.stringify(options.schema, (key: string, value: any) => {
+                if (value.constructor.name === "RegExp")
+                    return "".concat(RegExpPrefix, value);
 
-    if (!chuj[0] || chuj[1]) {
-        const typings = [
-            "declare global { _config: RootObject }",
-            ...JS2TS(o.schema)
-        ];
+                return value;
+            }));
 
-        const typings_meow = typings.join("\n")
-            .replace("interface RootObject", "export default interface RootObject");
+        if (!configTypingsExists) {
+            const typings = [
+                ...JS2TS(options.schema, { rootName: "IConfig" }),
+                "declare global { const _config: IConfig }"
+            ].join("\n").replace("interface IConfig", "export default interface IConfig").replace(": object", ": RegExp");
 
-        if (!chuj[1])
-            writeFileSync(o.config.typingPath, typings_meow);
-
-        if (!chuj[0])
-            writeFileSync(o.config.filePath, YAML.stringify(o.schema));
+            writeFileSync(options.config.typingPath, typings);
+        };
     };
 
     // @ts-ignore
-    return global['_config'] = YAML.parse(o.config.filePath)
+    return global['_config'] = YAML.parse(readFileSync(options.config.filePath, "utf8"), (key, value) => {
+        if (typeof value == "string" && value.startsWith(RegExpPrefix))
+            return eval(value.slice(RegExpPrefix.length));
+
+        return value;
+    }) as S;
 }
+
+export default YAMLConfig;
+
+
+// const config = YAMLConfig({
+//     config: {
+//         filePath: path.join(__dirname, "./test.yaml"),
+//         typingPath: "./test.d.ts"
+//     },
+//     schema: {
+//         user: {
+//             autistic: true,
+//             stupid: true,
+//             flag: 0,
+//             username: "gay69",
+//             id: "1312"
+//         },
+//         filters: [
+//             /go kill yourself uwu/igm
+//         ]
+//     }
+// });
+
+// // @ts-ignore
+// console.log(global._config)
