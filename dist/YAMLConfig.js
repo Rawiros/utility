@@ -7,8 +7,8 @@ const fs_1 = require("fs");
 const json_to_ts_1 = __importDefault(require("json-to-ts"));
 const yaml_1 = __importDefault(require("yaml"));
 function YAMLConfig(options) {
-    const configExists = false;
-    const configTypingsExists = false;
+    const configExists = (0, fs_1.existsSync)(options.config.filePath);
+    const configTypingsExists = (0, fs_1.existsSync)(options.config.typingPath);
     const RegExpPrefix = "[RegExp]: ";
     if (!configExists || !configTypingsExists) {
         if (!configExists)

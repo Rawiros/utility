@@ -1,6 +1,5 @@
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import JS2TS from 'json-to-ts';
-import path from 'path';
 import YAML from 'yaml';
 
 function YAMLConfig<S extends any>(options: {
@@ -10,8 +9,8 @@ function YAMLConfig<S extends any>(options: {
     }
     schema: S
 }) {
-    const configExists = false;
-    const configTypingsExists = false;
+    const configExists = existsSync(options.config.filePath);
+    const configTypingsExists = existsSync(options.config.typingPath);
     const RegExpPrefix = "[RegExp]: ";
 
     if (!configExists || !configTypingsExists) {
