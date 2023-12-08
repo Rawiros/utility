@@ -1,7 +1,3 @@
-import { existsSync, readFileSync, writeFileSync } from 'fs';
-import JS2TS from 'json-to-ts';
-import YAML from 'yaml';
-
 function YAMLConfig<S extends any>(options: {
     config: {
         filePath: string,
@@ -9,6 +5,11 @@ function YAMLConfig<S extends any>(options: {
     }
     schema: S
 }) {
+    if (!globalThis.process) return;
+    const { existsSync, readFileSync, writeFileSync } = require('fs');
+    const JS2TS = require('json-to-ts')?.default;
+    const YAML = require('yaml')?.default;
+
     const configExists = existsSync(options.config.filePath);
     const configTypingsExists = existsSync(options.config.typingPath);
     const RegExpPrefix = "[RegExp]: ";

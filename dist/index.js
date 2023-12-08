@@ -140,6 +140,8 @@ exports.sleep = sleep;
 const joinString = (...lines) => lines.filter(line => !!line).join("\n");
 exports.joinString = joinString;
 function recache(id) {
+    if (!process)
+        return;
     try {
         const realpath = require.resolve(id);
         delete require.cache[realpath];
@@ -152,15 +154,16 @@ function recache(id) {
 }
 exports.recache = recache;
 // expose global garbage collector
-if (process.argv0 !== "bun" && !globalThis.gc) {
-    require("v8").setFlagsFromString('--expose_gc');
-    global.gc = require("vm").runInNewContext('gc');
-}
-;
-// listen for errors
-if (process.env.PM2_HOME) {
-    process.on('uncaughtException', (err, origin) => console.log(origin, err));
-    process.on('unhandledRejection', err => console.log("unhandledRejection", err));
+if (globalThis.process) {
+    if (process.argv0 !== "bun" && !globalThis.gc) {
+        require("v8").setFlagsFromString('--expose_gc');
+        global.gc = require("vm").runInNewContext('gc');
+    }
+    // listen for errors
+    // if (process.env.PM2_HOME) {
+    //     process.on('uncaughtException', (err, origin) => console.log(origin, err));
+    //     process.on('unhandledRejection', err => console.log("unhandledRejection", err));
+    // };
 }
 ;
 //# sourceMappingURL=index.js.map

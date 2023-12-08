@@ -1,17 +1,16 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const fs_1 = __importDefault(require("fs"));
 class MapDB extends Map {
+    _storageProvider;
     filePath;
     constructor(filePath, entries) {
+        super(entries);
+        if (globalThis?.process)
+            this._storageProvider = require('fs');
         if (!filePath.endsWith(".json"))
             throw new Error("filePath needs to end with '.json' format!");
-        super(entries);
         this.filePath = filePath;
-        if (fs_1.default.existsSync(filePath))
+        if (this._storageProvider.existsSync(filePath))
             this.load();
         else
             this.save();
@@ -19,7 +18,7 @@ class MapDB extends Map {
     ;
     save() {
         const values = Array.from(this);
-        fs_1.default.writeFileSync(this.filePath, JSON.stringify(values));
+        this._storageProvider.writeFileSync(this.filePath, JSON.stringify(values));
     }
     ;
     set(key, value) {
@@ -35,7 +34,7 @@ class MapDB extends Map {
     }
     load() {
         try {
-            const data = JSON.parse(fs_1.default.readFileSync(this.filePath, "utf8"));
+            const data = JSON.parse(this._storageProvider.readFileSync(this.filePath, "utf8"));
             for (const item of data)
                 if (!this.has(item))
                     super.set(item[0], item[1]);

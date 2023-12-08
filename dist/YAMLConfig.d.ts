@@ -4,5 +4,5 @@ declare function YAMLConfig<S extends any>(options: {
         typingPath: string;
     };
     schema: S;
-}): S;
+}): S | undefined;
 export default YAMLConfig;

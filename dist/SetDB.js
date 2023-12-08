@@ -1,18 +1,17 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const fs_1 = __importDefault(require("fs"));
 class SetDB extends Set {
+    _storageProvider;
     filePath;
     // @ts-ignore
     constructor(filePath, ...values) {
+        super(values);
+        if (globalThis?.process)
+            this._storageProvider = require('fs');
         if (!filePath.endsWith(".json"))
             throw new Error("filePath needs to end with '.json' format!");
-        super(values);
         this.filePath = filePath;
-        if (fs_1.default.existsSync(filePath))
+        if (this._storageProvider.existsSync(filePath))
             this.load();
         else
             this.save();
@@ -20,7 +19,7 @@ class SetDB extends Set {
     ;
     save() {
         const values = Array.from(this);
-        fs_1.default.writeFileSync(this.filePath, JSON.stringify(values));
+        this._storageProvider.writeFileSync(this.filePath, JSON.stringify(values));
     }
     ;
     add(value) {
@@ -37,7 +36,7 @@ class SetDB extends Set {
     ;
     load() {
         try {
-            const data = JSON.parse(fs_1.default.readFileSync(this.filePath, "utf8"));
+            const data = JSON.parse(this._storageProvider.readFileSync(this.filePath, "utf8"));
             for (const item of data)
                 if (!this.has(item))
                     super.add(item);

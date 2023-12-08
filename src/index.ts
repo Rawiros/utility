@@ -185,6 +185,7 @@ const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const joinString = (...lines: string[]) => lines.filter(line => !!line).join("\n");
 
 function recache(id: string) {
+    if (!process) return;
     try {
         const realpath = require.resolve(id);
 
@@ -197,15 +198,17 @@ function recache(id: string) {
 }
 
 // expose global garbage collector
-if (process.argv0 !== "bun" && !globalThis.gc) {
-    require("v8").setFlagsFromString('--expose_gc');
-    global.gc = require("vm").runInNewContext('gc');
+if (globalThis.process) {
+    if (process.argv0 !== "bun" && !globalThis.gc) {
+        require("v8").setFlagsFromString('--expose_gc');
+        global.gc = require("vm").runInNewContext('gc');
+    }
+    // listen for errors
+    // if (process.env.PM2_HOME) {
+    //     process.on('uncaughtException', (err, origin) => console.log(origin, err));
+    //     process.on('unhandledRejection', err => console.log("unhandledRejection", err));
+    // };
 };
 
-// listen for errors
-if (process.env.PM2_HOME) {
-    process.on('uncaughtException', (err, origin) => console.log(origin, err));
-    process.on('unhandledRejection', err => console.log("unhandledRejection", err));
-};
 
 export { Icons, getCustomId, YAMLConfig, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };

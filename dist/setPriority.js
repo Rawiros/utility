@@ -1,15 +1,14 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const os_1 = __importDefault(require("os"));
-const { constants: { priority } } = os_1.default;
 function default_1(priorityName) {
-    if (os_1.default.getPriority() === priority[priorityName])
+    if (!globalThis.process)
+        return;
+    const os = require('os');
+    const { constants: { priority } } = os;
+    if (os.getPriority() === priority[priorityName])
         return true;
     try {
-        os_1.default.setPriority(priority[priorityName]);
+        os.setPriority(priority[priorityName]);
     }
     catch {
         return false;

@@ -1,17 +1,20 @@
-import fs from 'fs';
-
 export default class SetDB<T = any> extends Set<T> {
+    _storageProvider: any;
     filePath: string;
 
     // @ts-ignore
     constructor(filePath: string, ...values: readonly T[] | null) {
+        super(values);
+
+        if (globalThis?.process)
+            this._storageProvider = require('fs');
+
         if (!filePath.endsWith(".json"))
             throw new Error("filePath needs to end with '.json' format!");
 
-        super(values);
         this.filePath = filePath;
 
-        if (fs.existsSync(filePath))
+        if (this._storageProvider.existsSync(filePath))
             this.load();
         else
             this.save();
@@ -19,7 +22,7 @@ export default class SetDB<T = any> extends Set<T> {
 
     save() {
         const values = Array.from(this);
-        fs.writeFileSync(this.filePath, JSON.stringify(values));
+        this._storageProvider.writeFileSync(this.filePath, JSON.stringify(values));
     };
 
     add(value: T) {
@@ -36,7 +39,7 @@ export default class SetDB<T = any> extends Set<T> {
 
     load() {
         try {
-            const data = JSON.parse(fs.readFileSync(this.filePath, "utf8"));
+            const data = JSON.parse(this._storageProvider.readFileSync(this.filePath, "utf8"));
 
             for (const item of data)
                 if (!this.has(item))

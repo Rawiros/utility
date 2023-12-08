@@ -1,7 +1,8 @@
-import os from 'os';
-const { constants: { priority } } = os
+export default function (priorityName: string) {
+    if (!globalThis.process) return;
+    const os = require('os');
+    const { constants: { priority } } = os
 
-export default function (priorityName: keyof typeof priority) {
     if (os.getPriority() === priority[priorityName])
         return true;
 
