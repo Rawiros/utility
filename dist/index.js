@@ -155,9 +155,9 @@ function recache(id) {
 exports.recache = recache;
 // expose global garbage collector
 if (globalThis.process) {
-    if (process.argv0 !== "bun" && !globalThis.gc) {
+    if (globalThis.process.argv0 !== "bun" && !globalThis.gc) {
         require("v8").setFlagsFromString('--expose_gc');
-        global.gc = require("vm").runInNewContext('gc');
+        globalThis.gc = require("vm").runInNewContext('gc');
     }
     // listen for errors
     // if (process.env.PM2_HOME) {
