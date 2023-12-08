@@ -18,7 +18,7 @@ _icons.Placeholder = _icons[placeholder as keyof typeof _icons];
 const EMPTY = "᲼";
 const DOT = "•";
 
-Object.defineProperties(global, {
+Object.defineProperties(globalThis, {
     EMPTY: { get() { return EMPTY } },
     DOT: { get() { return DOT } }
 });

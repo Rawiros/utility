@@ -36,7 +36,7 @@ const EMPTY = "᲼";
 exports.EMPTY = EMPTY;
 const DOT = "•";
 exports.DOT = DOT;
-Object.defineProperties(global, {
+Object.defineProperties(globalThis, {
     EMPTY: { get() { return EMPTY; } },
     DOT: { get() { return DOT; } }
 });
