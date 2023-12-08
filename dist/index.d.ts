@@ -39,6 +39,7 @@ declare global {
         addFlag(flag: number): number;
         hasFlag(flag: number): boolean;
         removeFlag(flag: number): number;
+        format(digits?: number): string;
         formatBytes(decimals?: number): string;
         limit(min?: number, max?: number): number;
     }

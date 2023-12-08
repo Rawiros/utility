@@ -50,6 +50,7 @@ declare global {
         addFlag(flag: number): number
         hasFlag(flag: number): boolean
         removeFlag(flag: number): number
+        format(digits?: number): string
         formatBytes(decimals?: number): string
         limit(min?: number, max?: number): number
     }
@@ -100,6 +101,24 @@ Boolean.prototype.is = function (value) {
 };
 
 // Numbers
+const rule = /\.0+$|(.\d*[1-9])0+$/;
+const lookup = [
+    { value: 1, symbol: "" },
+    { value: 1e3, symbol: "k" },
+    { value: 1e6, symbol: "M" },
+    { value: 1e9, symbol: "G" },
+    { value: 1e12, symbol: "T" },
+    { value: 1e15, symbol: "P" },
+    { value: 1e18, symbol: "E" }
+];
+
+Number.prototype.format = function (digits = 2) {
+    const value = this.valueOf();
+    const item = lookup.slice().reverse().find(item => value >= item.value);
+
+    return item ? (value / item.value).toFixed(digits).replace(rule, "$1") + item.symbol : "0";
+}
+
 Number.prototype.equals = function (value) {
     return this.valueOf() === value;
 };
