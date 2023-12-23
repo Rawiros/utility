@@ -210,5 +210,49 @@ if (globalThis.process) {
     // };
 };
 
+interface WeakCachedOptions {
+    load(key: any): any;
+    unload(key: any): any;
+}
 
-export { Icons, getCustomId, YAMLConfig, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
+class WeakCached extends Map {
+    constructor(o: WeakCachedOptions) {
+        super();
+
+        const cleanup = new FinalizationRegistry((key: any) => {
+            const ref = super.get(key);
+
+            if (ref && !ref.deref())
+                if (super.delete(key))
+                    o.unload(key);
+        });
+
+        Object.defineProperty(this, 'get', {
+            value: (key: any) => {
+                const ref = super.get(key);
+
+                if (ref) {
+                    const cached = ref.deref();
+
+                    if (cached !== void 0)
+                        return cached;
+                };
+
+                const fresh = o.load(key)
+                super.set(key, new WeakRef(fresh));
+                cleanup.register(fresh, key);
+
+                return fresh;
+            }
+        })
+    };
+
+    /**
+     * Not Implemented
+     */
+    set(): this {
+        throw new Error("Not Implemented");
+    }
+}
+
+export { Icons, getCustomId, YAMLConfig, WeakCachedOptions, WeakCached, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };

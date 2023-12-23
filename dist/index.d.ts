@@ -103,4 +103,15 @@ declare const Icons: {
 declare const sleep: (ms: number) => Promise<unknown>;
 declare const joinString: (...lines: string[]) => string;
 declare function recache(id: string): any;
-export { Icons, getCustomId, YAMLConfig, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
+interface WeakCachedOptions {
+    load(key: any): any;
+    unload(key: any): any;
+}
+declare class WeakCached extends Map {
+    constructor(o: WeakCachedOptions);
+    /**
+     * Not Implemented
+     */
+    set(): this;
+}
+export { Icons, getCustomId, YAMLConfig, WeakCachedOptions, WeakCached, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };

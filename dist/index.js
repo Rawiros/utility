@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EMPTY = exports.DOT = exports.Icon = exports.formatErrorStack = exports.setPriority = exports.SetDB = exports.MapDB = exports.joinString = exports.flattenObject = exports.getDirectURL = exports.getFormattedDirectURL = exports.recache = exports.getUsername = exports.Queue = exports.formatBytes = exports.sleep = exports.time2ms = exports.YAMLConfig = exports.getCustomId = exports.Icons = void 0;
+exports.EMPTY = exports.DOT = exports.Icon = exports.formatErrorStack = exports.setPriority = exports.SetDB = exports.MapDB = exports.joinString = exports.flattenObject = exports.getDirectURL = exports.getFormattedDirectURL = exports.recache = exports.getUsername = exports.Queue = exports.formatBytes = exports.sleep = exports.time2ms = exports.WeakCached = exports.YAMLConfig = exports.getCustomId = exports.Icons = void 0;
 const icons_json_1 = require("./icons.json");
 const getCustomId_1 = __importDefault(require("./getCustomId"));
 exports.getCustomId = getCustomId_1.default;
@@ -166,4 +166,38 @@ if (globalThis.process) {
     // };
 }
 ;
+class WeakCached extends Map {
+    constructor(o) {
+        super();
+        const cleanup = new FinalizationRegistry((key) => {
+            const ref = super.get(key);
+            if (ref && !ref.deref())
+                if (super.delete(key))
+                    o.unload(key);
+        });
+        Object.defineProperty(this, 'get', {
+            value: (key) => {
+                const ref = super.get(key);
+                if (ref) {
+                    const cached = ref.deref();
+                    if (cached !== void 0)
+                        return cached;
+                }
+                ;
+                const fresh = o.load(key);
+                super.set(key, new WeakRef(fresh));
+                cleanup.register(fresh, key);
+                return fresh;
+            }
+        });
+    }
+    ;
+    /**
+     * Not Implemented
+     */
+    set() {
+        throw new Error("Not Implemented");
+    }
+}
+exports.WeakCached = WeakCached;
 //# sourceMappingURL=index.js.map
