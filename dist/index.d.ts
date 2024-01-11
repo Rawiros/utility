@@ -103,12 +103,13 @@ declare const Icons: {
 declare const sleep: (ms: number) => Promise<unknown>;
 declare const joinString: (...lines: string[]) => string;
 declare function recache(id: string): any;
-interface WeakCachedOptions {
-    load(key: any): any;
-    unload(key: any): any;
+interface WeakCachedOptions<K extends any> {
+    load(key: K): any;
+    unload(key: K): any;
 }
-declare class WeakCached extends Map {
-    constructor(o: WeakCachedOptions);
+declare class WeakCached<K extends any, V extends any> extends Map<K, any> {
+    constructor(o: WeakCachedOptions<K>);
+    get: ((key: K) => V);
     /**
      * Not Implemented
      */

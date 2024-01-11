@@ -210,19 +210,19 @@ if (globalThis.process) {
     // };
 };
 
-interface WeakCachedOptions {
-    load(key: any): any;
-    unload(key: any): any;
+interface WeakCachedOptions<K extends any> {
+    load(key: K): any;
+    unload(key: K): any;
 }
 
-class WeakCached extends Map {
-    constructor(o: WeakCachedOptions) {
+class WeakCached<K extends any, V extends any> extends Map<K, any> {
+    constructor(o: WeakCachedOptions<K>) {
         super();
 
         const cleanup = new FinalizationRegistry((key: any) => {
             const ref = super.get(key);
 
-            if (ref && !ref.deref())
+            if (ref && !ref?.deref())
                 if (super.delete(key))
                     o.unload(key);
         });
@@ -246,6 +246,8 @@ class WeakCached extends Map {
             }
         })
     };
+
+    get: ((key: K) => V) = () => void 0 as V;
 
     /**
      * Not Implemented

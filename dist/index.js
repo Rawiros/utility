@@ -171,7 +171,7 @@ class WeakCached extends Map {
         super();
         const cleanup = new FinalizationRegistry((key) => {
             const ref = super.get(key);
-            if (ref && !ref.deref())
+            if (ref && !ref?.deref())
                 if (super.delete(key))
                     o.unload(key);
         });
@@ -192,6 +192,7 @@ class WeakCached extends Map {
         });
     }
     ;
+    get = () => void 0;
     /**
      * Not Implemented
      */
