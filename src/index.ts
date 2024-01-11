@@ -210,51 +210,79 @@ if (globalThis.process) {
     // };
 };
 
-interface WeakCachedOptions<K extends any> {
-    load(key: K): any;
-    unload(key: K): any;
-}
+function make_weak_cache(load: (key: string) => any, unload?: (key: string) => any) {
+    const cache = new Map();
 
-class WeakCached<K extends any, V extends any> extends Map<K, any> {
-    constructor(o: WeakCachedOptions<K>) {
-        super();
+    const cleanup = new FinalizationRegistry((key: string) => {
+        const ref = cache.get(key);
 
-        const cleanup = new FinalizationRegistry((key: any) => {
-            const ref = super.get(key);
+        if (ref && !ref.deref()) {
+            if (cache.delete(key) && unload)
+                unload(key);
+        }
+    })
 
-            if (ref && !ref?.deref())
-                if (super.delete(key))
-                    o.unload(key);
-        });
+    return (key: string) => {
+        const ref = cache.get(key);
 
-        Object.defineProperty(this, 'get', {
-            value: (key: any) => {
-                const ref = super.get(key);
+        if (ref) {
+            const cached = ref.deref()
 
-                if (ref) {
-                    const cached = ref.deref();
+            if (cached !== undefined)
+                return cached
+        };
 
-                    if (cached !== void 0)
-                        return cached;
-                };
+        const fresh = load(key);
+        cache.set(key, new WeakRef(fresh));
+        cleanup.register(fresh, `${key}`);
 
-                const fresh = o.load(key)
-                super.set(key, new WeakRef(fresh));
-                cleanup.register(fresh, key);
-
-                return fresh;
-            }
-        })
-    };
-
-    get: ((key: K) => V) = () => void 0 as V;
-
-    /**
-     * Not Implemented
-     */
-    set(): this {
-        throw new Error("Not Implemented");
+        return fresh
     }
-}
+};
 
-export { Icons, getCustomId, YAMLConfig, WeakCachedOptions, WeakCached, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
+// class WeakCached<K extends any, V extends any> extends Map<K, any> {
+//     constructor(o: {
+//         load(key: K): V;
+//         unload(key: K): any;
+//     }) {
+//         super();
+
+//         const cleanup = new FinalizationRegistry((key: any) => {
+//             const ref = super.get(key);
+
+//             if (ref && !ref?.deref())
+//                 if (super.delete(key))
+//                     o.unload(key);
+//         });
+
+//         Object.defineProperty(this, 'get', {
+//             value: (key: any) => {
+//                 const ref = super.get(key);
+
+//                 if (ref) {
+//                     const cached = ref.deref();
+
+//                     if (cached !== void 0)
+//                         return cached;
+//                 };
+
+//                 const fresh = o.load(key)
+//                 super.set(key, new WeakRef(fresh));
+//                 cleanup.register(fresh, key);
+
+//                 return fresh;
+//             }
+//         })
+//     };
+
+//     get: ((key: K) => V) = () => void 0 as V;
+
+//     /**
+//      * Not Implemented
+//      */
+//     set(): this {
+//         throw new Error("Not Implemented");
+//     }
+// }
+
+export { Icons, getCustomId, YAMLConfig, make_weak_cache, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
