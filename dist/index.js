@@ -171,24 +171,24 @@ function make_weak_cache(load, unload) {
     const cleanup = new FinalizationRegistry((key) => {
         const ref = cache.get(key);
         if (ref && !ref.deref()) {
-            if (cache.delete(key) && unload)
+            if (cache.delete(key) && unload) {
                 unload(key);
+            }
         }
     });
     return (key) => {
         const ref = cache.get(key);
         if (ref) {
             const cached = ref.deref();
-            if (cached !== undefined)
+            if (cached !== undefined) {
                 return cached;
+            }
         }
-        ;
         const fresh = load(key);
         cache.set(key, new WeakRef(fresh));
-        cleanup.register(fresh, `${key}`);
+        cleanup.register(fresh, key);
         return fresh;
     };
 }
 exports.make_weak_cache = make_weak_cache;
-;
 //# sourceMappingURL=index.js.map
