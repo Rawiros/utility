@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EMPTY = exports.DOT = exports.Icon = exports.formatErrorStack = exports.setPriority = exports.SetDB = exports.MapDB = exports.joinString = exports.flattenObject = exports.getDirectURL = exports.getFormattedDirectURL = exports.recache = exports.getUsername = exports.Queue = exports.formatBytes = exports.sleep = exports.time2ms = exports.make_weak_cache = exports.YAMLConfig = exports.getCustomId = exports.Icons = void 0;
+exports.EMPTY = exports.DOT = exports.Icon = exports.formatErrorStack = exports.setPriority = exports.SetDB = exports.MapDB = exports.joinString = exports.flattenObject = exports.getDirectURL = exports.getFormattedDirectURL = exports.recache = exports.getUsername = exports.Queue = exports.formatBytes = exports.sleep = exports.time2ms = exports.make_weak_cached = exports.YAMLConfig = exports.getCustomId = exports.Icons = void 0;
 const icons_json_1 = require("./icons.json");
 const getCustomId_1 = __importDefault(require("./getCustomId"));
 exports.getCustomId = getCustomId_1.default;
@@ -166,23 +166,52 @@ if (globalThis.process) {
     // };
 }
 ;
-function make_weak_cache(load, unload) {
+//function make_weak_cache<T extends WeakKey>(load: LoadFunction<T>, unload?: UnloadFunction<T>) {
+//    const cache = new Map<string, WeakRef<T>>();
+//
+//    const cleanup = new FinalizationRegistry((key: string) => {
+//        const ref = cache.get(key);
+//
+//        if (ref && !ref.deref()) {
+//            if (cache.delete(key) && unload) {
+//                unload(key);
+//            }
+//        }
+//    });
+//
+//    return (key: string) => {
+//        const ref = cache.get(key);
+//
+//        if (ref) {
+//            const cached = ref.deref();
+//
+//            if (cached !== undefined) {
+//                return cached;
+//            }
+//        }
+//
+//        const fresh = load(key);
+//        cache.set(key, new WeakRef(fresh));
+//        cleanup.register(fresh, key);
+//
+//        return fresh;
+//    };
+//}
+function make_weak_cached(load, unload) {
     const cache = new Map();
-    const cleanup = new FinalizationRegistry((key) => {
+    const cleanup = new FinalizationRegistry(key => {
         const ref = cache.get(key);
         if (ref && !ref.deref()) {
-            if (cache.delete(key) && unload) {
+            if (cache.delete(key))
                 unload(key);
-            }
         }
     });
     return (key) => {
         const ref = cache.get(key);
         if (ref) {
             const cached = ref.deref();
-            if (cached !== undefined) {
+            if (cached !== undefined)
                 return cached;
-            }
         }
         const fresh = load(key);
         cache.set(key, new WeakRef(fresh));
@@ -190,5 +219,5 @@ function make_weak_cache(load, unload) {
         return fresh;
     };
 }
-exports.make_weak_cache = make_weak_cache;
+exports.make_weak_cached = make_weak_cached;
 //# sourceMappingURL=index.js.map

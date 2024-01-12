@@ -103,7 +103,5 @@ declare const Icons: {
 declare const sleep: (ms: number) => Promise<unknown>;
 declare const joinString: (...lines: string[]) => string;
 declare function recache(id: string): any;
-type LoadFunction<T> = (key: string) => T;
-type UnloadFunction<T> = (key: string) => void;
-declare function make_weak_cache<T extends WeakKey>(load: LoadFunction<T>, unload?: UnloadFunction<T>): (key: string) => T;
-export { Icons, getCustomId, YAMLConfig, make_weak_cache, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
+declare function make_weak_cached(load: any, unload: any): (key: any) => any;
+export { Icons, getCustomId, YAMLConfig, make_weak_cached, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };

@@ -213,39 +213,58 @@ if (globalThis.process) {
 type LoadFunction<T> = (key: string) => T;
 type UnloadFunction<T> = (key: string) => void;
 
-function make_weak_cache<T extends WeakKey>(load: LoadFunction<T>, unload?: UnloadFunction<T>) {
-    const cache = new Map<string, WeakRef<T>>();
+//function make_weak_cache<T extends WeakKey>(load: LoadFunction<T>, unload?: UnloadFunction<T>) {
+//    const cache = new Map<string, WeakRef<T>>();
+//
+//    const cleanup = new FinalizationRegistry((key: string) => {
+//        const ref = cache.get(key);
+//
+//        if (ref && !ref.deref()) {
+//            if (cache.delete(key) && unload) {
+//                unload(key);
+//            }
+//        }
+//    });
+//
+//    return (key: string) => {
+//        const ref = cache.get(key);
+//
+//        if (ref) {
+//            const cached = ref.deref();
+//
+//            if (cached !== undefined) {
+//                return cached;
+//            }
+//        }
+//
+//        const fresh = load(key);
+//        cache.set(key, new WeakRef(fresh));
+//        cleanup.register(fresh, key);
+//
+//        return fresh;
+//    };
+//}
 
-    const cleanup = new FinalizationRegistry((key: string) => {
-        const ref = cache.get(key);
-
+function make_weak_cached(load: any, unload: any) {
+    const cache = new Map()
+    const cleanup = new FinalizationRegistry(key => {
+        const ref = cache.get(key)
         if (ref && !ref.deref()) {
-            if (cache.delete(key) && unload) {
-                unload(key);
-            }
+            if (cache.delete(key)) unload(key)
         }
-    });
-
-    return (key: string) => {
-        const ref = cache.get(key);
-
+    })
+    return (key: any) => {
+        const ref = cache.get(key)
         if (ref) {
-            const cached = ref.deref();
-
-            if (cached !== undefined) {
-                return cached;
-            }
+            const cached = ref.deref()
+            if (cached !== undefined) return cached
         }
-
-        const fresh = load(key);
-        cache.set(key, new WeakRef(fresh));
-        cleanup.register(fresh, key);
-
-        return fresh;
-    };
+        const fresh = load(key)
+        cache.set(key, new WeakRef(fresh))
+        cleanup.register(fresh, key)
+        return fresh
+    }
 }
-
-
 
 // class WeakCached<K extends any, V extends any> extends Map<K, any> {
 //     constructor(o: {
@@ -292,4 +311,4 @@ function make_weak_cache<T extends WeakKey>(load: LoadFunction<T>, unload?: Unlo
 //     }
 // }
 
-export { Icons, getCustomId, YAMLConfig, make_weak_cache, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
+export { Icons, getCustomId, YAMLConfig, make_weak_cached, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
