@@ -311,4 +311,29 @@ function make_weak_cached(load: any, unload: any) {
 //     }
 // }
 
-export { Icons, getCustomId, YAMLConfig, make_weak_cached, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
+
+/**
+ * @param condition Condition that needs to be meet
+ * @param ms Condition check interval
+ * @returns {Promise<unknown>}
+ */
+const until = (condition: () => boolean, ms: number = 750) => new Promise(resolve => {
+    let interval: NodeJS.Timeout;
+
+    function performACheck() {
+        const state = condition();
+
+        if (!state)
+            return;
+
+        clearInterval(interval);
+        resolve(void 0);
+    };
+
+
+    performACheck();
+    interval = setInterval(performACheck, ms);
+});
+
+
+export { Icons, getCustomId, until, YAMLConfig, make_weak_cached, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };

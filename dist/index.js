@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EMPTY = exports.DOT = exports.Icon = exports.formatErrorStack = exports.setPriority = exports.SetDB = exports.MapDB = exports.joinString = exports.flattenObject = exports.getDirectURL = exports.getFormattedDirectURL = exports.recache = exports.getUsername = exports.Queue = exports.formatBytes = exports.sleep = exports.time2ms = exports.make_weak_cached = exports.YAMLConfig = exports.getCustomId = exports.Icons = void 0;
+exports.EMPTY = exports.DOT = exports.Icon = exports.formatErrorStack = exports.setPriority = exports.SetDB = exports.MapDB = exports.joinString = exports.flattenObject = exports.getDirectURL = exports.getFormattedDirectURL = exports.recache = exports.getUsername = exports.Queue = exports.formatBytes = exports.sleep = exports.time2ms = exports.make_weak_cached = exports.YAMLConfig = exports.until = exports.getCustomId = exports.Icons = void 0;
 const icons_json_1 = require("./icons.json");
 const getCustomId_1 = __importDefault(require("./getCustomId"));
 exports.getCustomId = getCustomId_1.default;
@@ -220,4 +220,58 @@ function make_weak_cached(load, unload) {
     };
 }
 exports.make_weak_cached = make_weak_cached;
+// class WeakCached<K extends any, V extends any> extends Map<K, any> {
+//     constructor(o: {
+//         load(key: K): V;
+//         unload(key: K): any;
+//     }) {
+//         super();
+//         const cleanup = new FinalizationRegistry((key: any) => {
+//             const ref = super.get(key);
+//             if (ref && !ref?.deref())
+//                 if (super.delete(key))
+//                     o.unload(key);
+//         });
+//         Object.defineProperty(this, 'get', {
+//             value: (key: any) => {
+//                 const ref = super.get(key);
+//                 if (ref) {
+//                     const cached = ref.deref();
+//                     if (cached !== void 0)
+//                         return cached;
+//                 };
+//                 const fresh = o.load(key)
+//                 super.set(key, new WeakRef(fresh));
+//                 cleanup.register(fresh, key);
+//                 return fresh;
+//             }
+//         })
+//     };
+//     get: ((key: K) => V) = () => void 0 as V;
+//     /**
+//      * Not Implemented
+//      */
+//     set(): this {
+//         throw new Error("Not Implemented");
+//     }
+// }
+/**
+ * @param condition Condition that needs to be meet
+ * @param ms Condition check interval
+ * @returns {Promise<unknown>}
+ */
+const until = (condition, ms = 750) => new Promise(resolve => {
+    let interval;
+    function performACheck() {
+        const state = condition();
+        if (!state)
+            return;
+        clearInterval(interval);
+        resolve(void 0);
+    }
+    ;
+    performACheck();
+    interval = setInterval(performACheck, ms);
+});
+exports.until = until;
 //# sourceMappingURL=index.js.map

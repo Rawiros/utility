@@ -104,4 +104,10 @@ declare const sleep: (ms: number) => Promise<unknown>;
 declare const joinString: (...lines: string[]) => string;
 declare function recache(id: string): any;
 declare function make_weak_cached(load: any, unload: any): (key: any) => any;
-export { Icons, getCustomId, YAMLConfig, make_weak_cached, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
+/**
+ * @param condition Condition that needs to be meet
+ * @param ms Condition check interval
+ * @returns {Promise<unknown>}
+ */
+declare const until: (condition: () => boolean, ms?: number) => Promise<unknown>;
+export { Icons, getCustomId, until, YAMLConfig, make_weak_cached, time2ms, sleep, formatBytes, Queue, getUsername, recache, getFormattedDirectURL, getDirectURL, flattenObject, joinString, MapDB, SetDB, setPriority, formatErrorStack, Icon, DOT, EMPTY };
