@@ -32,14 +32,17 @@ exports.Queue = Queue_1.default;
 const YAMLConfig_1 = __importDefault(require("./YAMLConfig"));
 exports.YAMLConfig = YAMLConfig_1.default;
 icons_json_1.icons.Placeholder = icons_json_1.icons[icons_json_1.placeholder];
-const EMPTY = "᲼";
-exports.EMPTY = EMPTY;
-const DOT = "•";
-exports.DOT = DOT;
-Object.defineProperties(globalThis, {
-    EMPTY: { get() { return EMPTY; } },
-    DOT: { get() { return DOT; } }
-});
+// @ts-ignore
+if (!globalThis.DOT) {
+    const EMPTY = "᲼";
+    exports.EMPTY = EMPTY;
+    const DOT = "•";
+    exports.DOT = DOT;
+    Object.defineProperties(globalThis, {
+        EMPTY: { get() { return EMPTY; } },
+        DOT: { get() { return DOT; } }
+    });
+}
 ;
 Math.toByte = degrees => {
     let b = Math.floor((degrees % 360) * 256 / 360);
@@ -166,6 +169,8 @@ if (globalThis.process) {
     // };
 }
 ;
+// type LoadFunction<T> = (key: string) => T;
+// type UnloadFunction<T> = (key: string) => void;
 //function make_weak_cache<T extends WeakKey>(load: LoadFunction<T>, unload?: UnloadFunction<T>) {
 //    const cache = new Map<string, WeakRef<T>>();
 //

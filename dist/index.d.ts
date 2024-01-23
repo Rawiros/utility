@@ -11,8 +11,6 @@ import getUsername from './getUsername';
 import getFormattedDirectURL from './getFormattedDirectURL';
 import Queue from './Queue';
 import YAMLConfig from './YAMLConfig';
-declare const EMPTY = "\u1CBC";
-declare const DOT = "\u2022";
 declare global {
     const DOT: string;
     const EMPTY: string;

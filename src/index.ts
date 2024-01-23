@@ -15,13 +15,17 @@ import YAMLConfig from './YAMLConfig';
 
 _icons.Placeholder = _icons[placeholder as keyof typeof _icons];
 
-const EMPTY = "᲼";
-const DOT = "•";
+// @ts-ignore
+if (!globalThis.DOT) {
+    const EMPTY = "᲼";
+    const DOT = "•";
 
-Object.defineProperties(globalThis, {
-    EMPTY: { get() { return EMPTY } },
-    DOT: { get() { return DOT } }
-});
+    Object.defineProperties(globalThis, {
+        EMPTY: { get() { return EMPTY } },
+        DOT: { get() { return DOT } }
+    });
+
+}
 
 declare global {
     const DOT: string
@@ -210,8 +214,8 @@ if (globalThis.process) {
     // };
 };
 
-type LoadFunction<T> = (key: string) => T;
-type UnloadFunction<T> = (key: string) => void;
+// type LoadFunction<T> = (key: string) => T;
+// type UnloadFunction<T> = (key: string) => void;
 
 //function make_weak_cache<T extends WeakKey>(load: LoadFunction<T>, unload?: UnloadFunction<T>) {
 //    const cache = new Map<string, WeakRef<T>>();
