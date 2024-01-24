@@ -8,7 +8,7 @@ function YAMLConfig<S extends any>(options: {
     if (!globalThis.process) return;
     const { existsSync, readFileSync, writeFileSync } = require('fs');
     const JS2TS = require('json-to-ts')?.default;
-    const YAML = require('yaml')?.default;
+    const YAML = require('yaml');
 
     const configExists = existsSync(options.config.filePath);
     const configTypingsExists = existsSync(options.config.typingPath);
