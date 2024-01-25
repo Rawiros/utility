@@ -18,7 +18,7 @@ function YAMLConfig(options) {
         const typesDir = path_1.default.join(options.config.filePath, "@types");
         if (!configExists)
             if (!existsSync(typesDir))
-                (0, fs_1.mkdirSync)(typesDir);
+                (0, fs_1.mkdirSync)(typesDir, { recursive: true });
         writeFileSync(options.config.filePath, YAML.stringify(options.schema, (key, value) => {
             if (value.constructor.name === "RegExp")
                 return "".concat(RegExpPrefix, value);

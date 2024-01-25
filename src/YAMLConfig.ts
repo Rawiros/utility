@@ -22,7 +22,7 @@ function YAMLConfig<S extends any>(options: {
 
         if (!configExists)
             if (!existsSync(typesDir))
-                mkdirSync(typesDir);
+                mkdirSync(typesDir, { recursive: true });
 
         writeFileSync(options.config.filePath, YAML.stringify(options.schema, (key: string, value: any) => {
             if (value.constructor.name === "RegExp")
