@@ -18,6 +18,8 @@ function YAMLConfig<S extends any>(options: {
     const RegExpPrefix = "[RegExp]: ";
 
     if (!configExists || !configTypingsExists) {
+        const typesDir = path.join(options.config.filePath, "..", "@types");
+
         if (!configExists)
             writeFileSync(options.config.filePath, YAML.stringify(options.schema, (key: string, value: any) => {
                 if (value.constructor.name === "RegExp")
@@ -27,6 +29,9 @@ function YAMLConfig<S extends any>(options: {
             }));
 
         if (!configTypingsExists) {
+            if (!existsSync(typesDir))
+                return;
+
             const typings = [
                 ...JS2TS(options.schema, { rootName: "IConfig" }),
                 "declare global { const _config: IConfig }"
