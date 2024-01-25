@@ -19,6 +19,7 @@ function YAMLConfig<S extends any>(options: {
 
     if (!configExists || !configTypingsExists) {
         const typesDir = path.join(options.config.filePath, "..", "@types");
+        console.log(typesDir)
 
         if (!configExists)
             if (!existsSync(typesDir))

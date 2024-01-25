@@ -16,6 +16,7 @@ function YAMLConfig(options) {
     const RegExpPrefix = "[RegExp]: ";
     if (!configExists || !configTypingsExists) {
         const typesDir = path_1.default.join(options.config.filePath, "..", "@types");
+        console.log(typesDir);
         if (!configExists)
             if (!existsSync(typesDir))
                 (0, fs_1.mkdirSync)(typesDir);
