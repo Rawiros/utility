@@ -21,17 +21,17 @@ function YAMLConfig<S extends any>(options: {
         const typesDir = path.join(options.config.filePath, "@types");
 
         if (!configExists)
-            if (!existsSync(typesDir))
-                mkdirSync(typesDir, { recursive: true });
+            writeFileSync(options.config.filePath, YAML.stringify(options.schema, (key: string, value: any) => {
+                if (value.constructor.name === "RegExp")
+                    return "".concat(RegExpPrefix, value);
 
-        writeFileSync(options.config.filePath, YAML.stringify(options.schema, (key: string, value: any) => {
-            if (value.constructor.name === "RegExp")
-                return "".concat(RegExpPrefix, value);
-
-            return value;
-        }));
+                return value;
+            }));
 
         if (!configTypingsExists) {
+            if (!existsSync(typesDir))
+                mkdirSync(typesDir);
+
             const typings = [
                 ...JS2TS(options.schema, { rootName: "IConfig" }),
                 "declare global { const _config: IConfig }"
@@ -51,26 +51,3 @@ function YAMLConfig<S extends any>(options: {
 }
 
 export default YAMLConfig;
-
-
-// const config = YAMLConfig({
-//     config: {
-//         filePath: path.join(__dirname, "./test.yaml"),
-//         typingPath: "./test.d.ts"
-//     },
-//     schema: {
-//         user: {
-//             autistic: true,
-//             stupid: true,
-//             flag: 0,
-//             username: "gay69",
-//             id: "1312"
-//         },
-//         filters: [
-//             /go kill yourself uwu/igm
-//         ]
-//     }
-// });
-
-// // @ts-ignore
-// console.log(global._config)
