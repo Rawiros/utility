@@ -1,4 +1,4 @@
-import {  mkdirSync } from "fs";
+import { mkdirSync } from "fs";
 import path from "path";
 
 function YAMLConfig<S extends any>(options: {
@@ -18,8 +18,7 @@ function YAMLConfig<S extends any>(options: {
     const RegExpPrefix = "[RegExp]: ";
 
     if (!configExists || !configTypingsExists) {
-        const typesDir = path.join(options.config.filePath, "..", "@types");
-        console.log(typesDir)
+        const typesDir = path.join(options.config.filePath, "@types");
 
         if (!configExists)
             if (!existsSync(typesDir))
