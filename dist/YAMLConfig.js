@@ -1,10 +1,5 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const fs_1 = require("fs");
-const path_1 = __importDefault(require("path"));
 function YAMLConfig(options) {
     if (!globalThis.process)
         return;
@@ -15,7 +10,6 @@ function YAMLConfig(options) {
     const configTypingsExists = existsSync(options.config.typingPath);
     const RegExpPrefix = "[RegExp]: ";
     if (!configExists || !configTypingsExists) {
-        const typesDir = path_1.default.join(options.config.filePath, "..", "@types");
         if (!configExists)
             writeFileSync(options.config.filePath, YAML.stringify(options.schema, (key, value) => {
                 if (value.constructor.name === "RegExp")
@@ -23,8 +17,6 @@ function YAMLConfig(options) {
                 return value;
             }));
         if (!configTypingsExists) {
-            if (!existsSync(typesDir))
-                (0, fs_1.mkdirSync)(typesDir);
             const typings = [
                 ...JS2TS(options.schema, { rootName: "IConfig" }),
                 "declare global { const _config: IConfig }"
