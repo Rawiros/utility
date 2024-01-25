@@ -1,3 +1,6 @@
+import {  mkdirSync } from "fs";
+import path from "path";
+
 function YAMLConfig<S extends any>(options: {
     config: {
         filePath: string,
@@ -15,13 +18,18 @@ function YAMLConfig<S extends any>(options: {
     const RegExpPrefix = "[RegExp]: ";
 
     if (!configExists || !configTypingsExists) {
-        if (!configExists)
-            writeFileSync(options.config.filePath, YAML.stringify(options.schema, (key: string, value: any) => {
-                if (value.constructor.name === "RegExp")
-                    return "".concat(RegExpPrefix, value);
+        const typesDir = path.join(options.config.filePath, "..", "@types");
 
-                return value;
-            }));
+        if (!configExists)
+            if (!existsSync(typesDir))
+                mkdirSync(typesDir);
+
+        writeFileSync(options.config.filePath, YAML.stringify(options.schema, (key: string, value: any) => {
+            if (value.constructor.name === "RegExp")
+                return "".concat(RegExpPrefix, value);
+
+            return value;
+        }));
 
         if (!configTypingsExists) {
             const typings = [
