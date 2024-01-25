@@ -18,7 +18,7 @@ function YAMLConfig<S extends any>(options: {
     const RegExpPrefix = "[RegExp]: ";
 
     if (!configExists || !configTypingsExists) {
-        const typesDir = path.join(options.config.filePath, "@types");
+        const typesDir = path.join(options.config.filePath, "..", "@types");
 
         if (!configExists)
             writeFileSync(options.config.filePath, YAML.stringify(options.schema, (key: string, value: any) => {
