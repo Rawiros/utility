@@ -19,7 +19,7 @@ declare global {
         toIcon(): string;
     }
     interface String {
-        firstUpper(): string;
+        firstToUpperCase(): string;
         limit(length: number): string;
         equals(value: string): boolean;
         format(data?: Record<string, any>): string;

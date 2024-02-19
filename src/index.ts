@@ -16,7 +16,7 @@ import YAMLConfig from './YAMLConfig';
 _icons.Placeholder = _icons[placeholder as keyof typeof _icons];
 
 // @ts-ignore
-if (!globalThis.DOT) {
+if (!globalThis?.DOT) {
     const EMPTY = "᲼";
     const DOT = "•";
 
@@ -36,7 +36,7 @@ declare global {
         toIcon(): string
     }
     interface String {
-        firstUpper(): string
+        firstToUpperCase(): string
         limit(length: number): string
         equals(value: string): boolean
         format(data?: Record<string, any>): string
@@ -172,7 +172,7 @@ Boolean.prototype.toIcon = function () {
     return this ? _icons.Yes : _icons.No;
 };
 
-String.prototype.firstUpper = function () {
+String.prototype.firstToUpperCase = function () {
     return (this as string).split("_").map(e => e[0].toUpperCase() + e.slice(1).toLowerCase()).join("");
 };
 

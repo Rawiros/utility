@@ -33,7 +33,7 @@ const YAMLConfig_1 = __importDefault(require("./YAMLConfig"));
 exports.YAMLConfig = YAMLConfig_1.default;
 icons_json_1.icons.Placeholder = icons_json_1.icons[icons_json_1.placeholder];
 // @ts-ignore
-if (!globalThis.DOT) {
+if (!globalThis?.DOT) {
     const EMPTY = "᲼";
     exports.EMPTY = EMPTY;
     const DOT = "•";
@@ -127,7 +127,7 @@ BigInt.prototype.toNumber = function () {
 Boolean.prototype.toIcon = function () {
     return this ? icons_json_1.icons.Yes : icons_json_1.icons.No;
 };
-String.prototype.firstUpper = function () {
+String.prototype.firstToUpperCase = function () {
     return this.split("_").map(e => e[0].toUpperCase() + e.slice(1).toLowerCase()).join("");
 };
 const Icon = (name, text) => {
