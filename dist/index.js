@@ -267,8 +267,8 @@ exports.make_weak_cached = make_weak_cached;
  */
 const until = (condition, ms = 750) => new Promise(resolve => {
     let interval;
-    function performACheck() {
-        const state = condition();
+    async function performACheck() {
+        const state = await condition();
         if (!state)
             return;
         clearInterval(interval);
