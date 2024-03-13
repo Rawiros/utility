@@ -321,11 +321,11 @@ function make_weak_cached(load: any, unload: any) {
  * @param ms Condition check interval
  * @returns {Promise<unknown>}
  */
-const until = (condition: () => boolean, ms: number = 750) => new Promise(resolve => {
+const until = (condition: () => boolean | Promise<boolean>, ms: number = 750) => new Promise(resolve => {
     let interval: NodeJS.Timeout;
 
-    function performACheck() {
-        const state = condition();
+    async function performACheck() {
+        const state = await condition();
 
         if (!state)
             return;
