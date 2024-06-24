@@ -49,12 +49,12 @@ declare global {
         random(): T;
     }
 }
-declare const Icon: <IconName extends "Danger1" | "Minus" | "No" | "Yes" | "Hammer" | "Time" | "Todo" | "Hmm" | "Date" | "Danger3" | "Heart" | "Id" | "Info" | "Join" | "Leave" | "Message" | "Pin" | "Stage" | "Telegram" | "User" | "Crown" | "Airplane" | "Bank" | "Bell" | "Bulb" | "Forum" | "Invite" | "Key" | "Lock" | "Moon" | "Options" | "Pen" | "Plus" | "Star2" | "Star3" | "Stars" | "Thunder" | "Trophy" | "Unluck" | "User1" | "Users" | "Mention" | "Fire" | "Link" | "Placeholder">(name: IconName, text?: string) => string;
+declare const Icon: <IconName extends "Danger1" | "Minus" | "Nahh" | "Yep" | "Hammer" | "Time" | "Todo" | "Hmm" | "Date" | "Danger3" | "Heart" | "Id" | "Info" | "Join" | "Leave" | "Message" | "Pin" | "Stage" | "Telegram" | "User" | "Crown" | "Airplane" | "Bank" | "Bell" | "Bulb" | "Forum" | "Invite" | "Key" | "Lock" | "Moon" | "Options" | "Pen" | "Plus" | "Star2" | "Star3" | "Stars" | "Thunder" | "Trophy" | "Unluck" | "User1" | "Users" | "Mention" | "Fire" | "Porvalo" | "Typescript" | "Worksonmymachine" | "Arrow4" | "Arrow3" | "Arrow2" | "Arrow1" | "Seks" | "Stare" | "Placeholder">(name: IconName, text?: string) => string;
 declare const Icons: {
-    Icon: <IconName extends "Danger1" | "Minus" | "No" | "Yes" | "Hammer" | "Time" | "Todo" | "Hmm" | "Date" | "Danger3" | "Heart" | "Id" | "Info" | "Join" | "Leave" | "Message" | "Pin" | "Stage" | "Telegram" | "User" | "Crown" | "Airplane" | "Bank" | "Bell" | "Bulb" | "Forum" | "Invite" | "Key" | "Lock" | "Moon" | "Options" | "Pen" | "Plus" | "Star2" | "Star3" | "Stars" | "Thunder" | "Trophy" | "Unluck" | "User1" | "Users" | "Mention" | "Fire" | "Link" | "Placeholder">(name: IconName, text?: string) => string;
+    Icon: <IconName extends "Danger1" | "Minus" | "Nahh" | "Yep" | "Hammer" | "Time" | "Todo" | "Hmm" | "Date" | "Danger3" | "Heart" | "Id" | "Info" | "Join" | "Leave" | "Message" | "Pin" | "Stage" | "Telegram" | "User" | "Crown" | "Airplane" | "Bank" | "Bell" | "Bulb" | "Forum" | "Invite" | "Key" | "Lock" | "Moon" | "Options" | "Pen" | "Plus" | "Star2" | "Star3" | "Stars" | "Thunder" | "Trophy" | "Unluck" | "User1" | "Users" | "Mention" | "Fire" | "Porvalo" | "Typescript" | "Worksonmymachine" | "Arrow4" | "Arrow3" | "Arrow2" | "Arrow1" | "Seks" | "Stare" | "Placeholder">(name: IconName, text?: string) => string;
     Minus: string;
-    No: string;
-    Yes: string;
+    Nahh: string;
+    Yep: string;
     Hammer: string;
     Time: string;
     Todo: string;
@@ -95,7 +95,15 @@ declare const Icons: {
     Users: string;
     Mention: string;
     Fire: string;
-    Link: string;
+    Porvalo: string;
+    Typescript: string;
+    Worksonmymachine: string;
+    Arrow4: string;
+    Arrow3: string;
+    Arrow2: string;
+    Arrow1: string;
+    Seks: string;
+    Stare: string;
     Placeholder: string;
 };
 declare const sleep: (ms: number) => Promise<unknown>;

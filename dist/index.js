@@ -126,7 +126,7 @@ if (!Math['toByte']) {
         return Number(this.valueOf());
     };
     Boolean.prototype.toIcon = function () {
-        return this ? icons_json_1.icons.Yes : icons_json_1.icons.No;
+        return this ? icons_json_1.icons.Yep : icons_json_1.icons.Nahh;
     };
     String.prototype.firstToUpperCase = function () {
         return this.split("_").map(e => e[0].toUpperCase() + e.slice(1).toLowerCase()).join("");

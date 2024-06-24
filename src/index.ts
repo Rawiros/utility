@@ -169,7 +169,7 @@ if (!Math['toByte']) {
     };
 
     Boolean.prototype.toIcon = function () {
-        return this ? _icons.Yes : _icons.No;
+        return this ? _icons.Yep : _icons.Nahh;
     };
 
     String.prototype.firstToUpperCase = function () {
