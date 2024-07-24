@@ -204,17 +204,18 @@ function recache(id: string) {
 }
 
 // expose global garbage collector
-if (globalThis.process) {
-    if (globalThis.process.argv0 !== "bun" && !globalThis.gc) {
-        require("v8").setFlagsFromString('--expose_gc');
-        globalThis.gc = require("vm").runInNewContext('gc');
-    }
-    // listen for errors
-    // if (process.env.PM2_HOME) {
-    //     process.on('uncaughtException', (err, origin) => console.log(origin, err));
-    //     process.on('unhandledRejection', err => console.log("unhandledRejection", err));
-    // };
-};
+// if (globalThis.process) {
+// /bun/.test(process.release.sourceUrl)
+// if (globalThis.process.argv0 !== "bun" && !globalThis.gc) {
+//     require("v8").setFlagsFromString('--expose_gc');
+//     globalThis.gc = require("vm").runInNewContext('gc');
+// }
+// listen for errors
+// if (process.env.PM2_HOME) {
+//     process.on('uncaughtException', (err, origin) => console.log(origin, err));
+//     process.on('unhandledRejection', err => console.log("unhandledRejection", err));
+// };
+// };
 
 // type LoadFunction<T> = (key: string) => T;
 // type UnloadFunction<T> = (key: string) => void;
